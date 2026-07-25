@@ -16,9 +16,6 @@ python setup.py develop
 |  ----  | ----  |
 |  DIV2K | Set5 + Set14 + BSD100 + Urban100 + Manga109  |
 
-
-Refer to the datasets folder for the complete data. 
-
 ## Implementation of FreeTransformSR
 ### Train
 
@@ -38,13 +35,6 @@ python scripts/test_SISR.py -opt options/test/FreeTransformSR/FreeTransformSR_x2
 python scripts/test_SISR.py -opt options/test/FreeTransformSR/FreeTransformSR_x3.yml --model_path ./experiments/pretrained_models/FreeTransformSR_x3.pth --save_img    
 #scale factor 4
 python scripts/test_SISR.py -opt options/test/FreeTransformSR/FreeTransformSR_x4.yml --model_path ./experiments/pretrained_models/FreeTransformSR_x4.pth --save_img  
-```
-
-@article{song2025efficient,
-  title = {Efficient frequency feature aggregation transformer for image super-resolution},
-  author={Song, Jianwen and Sowmya, Arcot and Sun, Changming},
-  journal = {Pattern Recognition},
-  year = {2025}
 ```
 
 ### Download links

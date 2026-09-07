@@ -1,0 +1,139 @@
+name: FreeTransformSR_x4
+model_type: ImageRestorationModel
+scale: 4
+num_gpu: 1
+manual_seed: 10
+
+datasets:
+  train:
+    name: DIV2K-sr-train
+    type: PairedImageDataset
+    dataroot_gt: datasets/SISR/train/DIV2K_train_HR
+    dataroot_lq: datasets/SISR/train/DIV2K_train_LR_bicubic/X4
+    io_backend:
+      type: disk
+
+    gt_size: 256
+    use_hflip: true
+    use_rot: true
+
+    use_shuffle: true
+    num_worker_per_gpu: 6
+    batch_size_per_gpu: 32
+    accum_iter: 1  # effective batch size = batch_size_per_gpu * accum_iter
+    dataset_enlarge_ratio: 10
+    prefetch_mode: ~
+
+  val_Set5:
+    name: Set5-sr-test
+    type: PairedImageDatasetTest
+    dataroot_gt: datasets/SISR/test/Set5/HR
+    dataroot_lq: datasets/SISR/test/Set5/LR_bicubic/X4
+    io_backend:
+      type: disk
+
+  val_Set14:
+    name: Set14-sr-test
+    type: PairedImageDatasetTest
+    dataroot_gt: datasets/SISR/test/Set14/HR
+    dataroot_lq: datasets/SISR/test/Set14/LR_bicubic/X4
+    io_backend:
+      type: disk
+
+  val_B100:
+    name: B100-sr-test
+    type: PairedImageDatasetTest
+    dataroot_gt: datasets/SISR/test/B100/HR
+    dataroot_lq: datasets/SISR/test/B100/LR_bicubic/X4
+    io_backend:
+      type: disk
+
+  val_Urban100:
+    name: Urban100-sr-test
+    type: PairedImageDatasetTest
+    dataroot_gt: datasets/SISR/test/Urban100/HR
+    dataroot_lq: datasets/SISR/test/Urban100/LR_bicubic/X4
+    io_backend:
+      type: disk
+
+  val_manga109:
+    name: manga109-sr-test
+    type: PairedImageDatasetTest
+    dataroot_gt: datasets/SISR/test/manga109/HR
+    dataroot_lq: datasets/SISR/test/manga109/LR_bicubic/X4
+    io_backend:
+      type: disk
+
+# network structures
+network_g:
+  type: FreeTransformSR
+  up_scale: 4
+  dim: 60
+  groups: 5
+  num: 4
+  
+# path
+path:
+  pretrain_network_g: experiments/pretrained_models/FreeTransformSR_x2.pth
+  strict_load_g: false
+  resume_state: ~
+
+# training settings
+train:
+  optim_g:
+    type: AdamW
+    lr: !!float 1e-3
+    weight_decay: !!float 0
+    betas: [0.9, 0.999]
+
+
+  scheduler:
+    type: TrueCosineAnnealingLR
+    T_max: 250000
+    eta_min: !!float 1e-7
+
+  total_iter: 250000
+  warmup_iter: -1 # no warm up
+  mixup: false
+
+  # losses
+  pixel_opt:
+    type: L1Loss
+    loss_weight: 1.
+    reduction: mean
+  freq_opt:
+    type: FFTLoss
+    loss_weight: 0.1
+    reduction: mean
+
+# validation settings  2e4
+val:
+  val_freq: !!float 2000
+  save_img: True
+  trans_num: 1
+
+  max_minibatch: 1
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 4
+      test_y_channel: True
+    ssim:
+      type: calculate_ssim
+      crop_border: 4
+      test_y_channel: true
+
+# logging settings  200 1e4 
+logger:
+  print_freq: 200
+  save_checkpoint_freq: !!float 2000
+  use_tb_logger: true
+  wandb:
+    project: ~
+    resume_id: ~
+
+# dist training settings
+dist_params:
+  backend: nccl
+  port: 29500

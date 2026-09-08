@@ -154,7 +154,7 @@ class LearnedTransformBlock(nn.Module):
         return x + x0
 
 
-class FreqGuidedAttention(nn.Module):
+class WindowAttention(nn.Module):
     def __init__(self, dim, heads=3, wsize=16, shift=False):
         super().__init__()
         assert dim % heads == 0, f"dim={dim} must be divisible by heads={heads}"
@@ -262,7 +262,7 @@ class SoftComplexityAdaptiveBlock(nn.Module):
         assert heads == 3, "heads should be fixed to 3 in current setting"
         assert dim % heads == 0, f"dim={dim} must be divisible by heads={heads}"
         self.light = LightLocalBlock(dim)
-        self.heavy = FreqGuidedAttention(dim, heads=heads, wsize=wsize, shift=shift)
+        self.heavy = WindowAttention(dim, heads=heads, wsize=wsize, shift=shift)
         self.router = ComplexityRouter(dim, wsize=wsize, reduction=4, init_bias=-1.0, gate_min=.1, gate_max=0.9)
 
     def forward(self, x):

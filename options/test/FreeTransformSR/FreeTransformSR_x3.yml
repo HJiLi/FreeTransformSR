@@ -8,8 +8,8 @@ datasets:
   train:
     name: DIV2K-sr-train
     type: PairedImageDataset
-    dataroot_gt: datasets/SISR/train/DIV2K_train_HR
-    dataroot_lq: datasets/SISR/train/DIV2K_train_LR_bicubic/X3
+    dataroot_gt: datasets/train/DIV2K_train_HR
+    dataroot_lq: datasets/train/DIV2K_train_LR_bicubic/X3
     io_backend:
       type: disk
 
@@ -27,40 +27,40 @@ datasets:
   val_Set5:
     name: Set5-sr-test
     type: PairedImageDatasetTest
-    dataroot_gt: datasets/SISR/test/Set5/HR
-    dataroot_lq: datasets/SISR/test/Set5/LR_bicubic/X3
+    dataroot_gt: datasets/test/Set5/HR
+    dataroot_lq: datasets/test/Set5/LR_bicubic/X3
     io_backend:
       type: disk
 
   val_Set14:
     name: Set14-sr-test
     type: PairedImageDatasetTest
-    dataroot_gt: datasets/SISR/test/Set14/HR
-    dataroot_lq: datasets/SISR/test/Set14/LR_bicubic/X3
+    dataroot_gt: datasets/test/Set14/HR
+    dataroot_lq: datasets/test/Set14/LR_bicubic/X3
     io_backend:
       type: disk
 
   val_B100:
     name: B100-sr-test
     type: PairedImageDatasetTest
-    dataroot_gt: datasets/SISR/test/B100/HR
-    dataroot_lq: datasets/SISR/test/B100/LR_bicubic/X3
+    dataroot_gt: datasets/test/B100/HR
+    dataroot_lq: datasets/test/B100/LR_bicubic/X3
     io_backend:
       type: disk
 
   val_Urban100:
     name: Urban100-sr-test
     type: PairedImageDatasetTest
-    dataroot_gt: datasets/SISR/test/Urban100/HR
-    dataroot_lq: datasets/SISR/test/Urban100/LR_bicubic/X3
+    dataroot_gt: datasets/test/Urban100/HR
+    dataroot_lq: datasets/test/Urban100/LR_bicubic/X3
     io_backend:
       type: disk
 
   val_manga109:
     name: manga109-sr-test
     type: PairedImageDatasetTest
-    dataroot_gt: datasets/SISR/test/manga109/HR
-    dataroot_lq: datasets/SISR/test/manga109/LR_bicubic/X3
+    dataroot_gt: datasets/test/manga109/HR
+    dataroot_lq: datasets/test/manga109/LR_bicubic/X3
     io_backend:
       type: disk
 

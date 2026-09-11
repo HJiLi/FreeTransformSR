@@ -1,7 +1,7 @@
 name: FreeTransformSR_x4
 model_type: ImageRestorationModel
 scale: 4
-num_gpu: 1
+num_gpu: auto
 manual_seed: 10
 
 datasets:
@@ -18,9 +18,8 @@ datasets:
     use_rot: true
 
     use_shuffle: true
-    num_worker_per_gpu: 20
-    batch_size_per_gpu: 32
-    accum_iter: 2  # effective batch size = batch_size_per_gpu * accum_iter
+    num_worker_per_gpu: 10
+    batch_size_per_gpu: 16
     dataset_enlarge_ratio: 10
     prefetch_mode: ~
 
